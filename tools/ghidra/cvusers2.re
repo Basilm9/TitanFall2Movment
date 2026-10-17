@@ -1,0 +1,1 @@
+^(grapple_|traversal_|dodge_|sprinttilt_|airslowmo_|sprint_powerdrain|zipline_|movement_anim_|step_debug|ground_debug|player_useMovementBounds)

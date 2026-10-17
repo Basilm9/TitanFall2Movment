@@ -1,0 +1,1 @@
+^(wallrun_|automantle_|slide_|skip_|superjump_|jump_|player_extraairaccelleration|sv_airaccelerate|sv_friction|sv_edgefriction|sv_use_edgefriction|sv_gravity|sv_maxspeed|sv_stopspeed|sv_backspeed|sv_maxvelocity)

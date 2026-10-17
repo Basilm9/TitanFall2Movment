@@ -1,0 +1,14 @@
+# Never commit game files, decompiled output or analysis databases
+extracted/
+vpk_extract/
+decomp/
+logic*/
+proj/
+*.dll
+*.exe
+*.vpk
+*.snap
+*.gpr
+*.rep/
+weapons_resolved.json
+*.log
