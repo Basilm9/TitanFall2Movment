@@ -18,6 +18,32 @@ A reverse-engineered record of **Titanfall 2 pilot movement** plus a **combat va
 | [docs/ground_misc.md](docs/ground_misc.md) | Per-tick dispatcher, walk/sprint/crouch, stairs, dodge, sprint tilt, air slow-mo, window traversal |
 | [docs/player_settings_table.md](docs/player_settings_table.md) | All 421 per-class player settings fields in server.dll (offset, type, code default, help text) |
 
+## Code examples: Unreal Engine 5 C++ reimplementation
+[examples/unreal/](examples/unreal/README.md) is a drop-in UE5 plugin (`Plugins/TFMovement`). It is a clean-room rewrite, built from these docs, with the same functionality as the game. It contains no game code.
+
+| Part | Files | What it is |
+|---|---|---|
+| Movement core | `TFMovementCore.h/.cpp` | Plain C++ (no Unreal headers) with every pilot system:<br>- ground, sprint, crouch, stairs<br>- jump, coyote time, skip, double jump, keyboard grace<br>- air control<br>- slide (boost, decay, slide-jump)<br>- wallrun and wallhang<br>- auto-mantle<br>- grapple<br>- zipline<br>- Stim speed boost<br>- dodge (disabled for MP pilots, as shipped)<br><br>It runs on Titanfall units. Every tunable is a field defaulting to the shipped MP value, tagged [D]/[R]/[C]/[I]/[?]. |
+| Unreal glue | `TFPilotMovementComponent`, `TFPilotSettingsUE.h`, `TFZiplineActor`, `TFPilotCharacterExample` | `UPawnMovementComponent` (capsule sweeps, 1 u = 2.54 cm, Source↔Unreal axis conversion, fixed 60 Hz step), editor-exposed settings, spline zipline, example pawn with input bindings |
+| Weapons | `TFWeaponTable.h`, `TFWeaponMath`, `UTFWeaponLibrary` | All 32 pilot weapons and 16 ordnance items; damage by distance, headshot range rule, EVA blast rule, pellets, splash, STK/TTK/DPS; Blueprint functions |
+
+**What has been verified:**
+- **Clean compile:** the engine-independent parts (`TFMovementCore`, `TFWeaponMath`) compile with zero warnings under clang (`-std=c++17 -Wall -Wextra -Wshadow -Wpedantic`).
+- **Behavior test:** the movement core was run in a test world and reproduces the documented numbers:
+  - walk 173.5 / sprint 260 / crouch 80;
+  - double jump +75 u;
+  - slide boost then slide-jump snap to 350;
+  - 1.75 s wallrun;
+  - grapple ramp, and the detach loss;
+  - zipline 600 u/s;
+  - Stim 468 u/s.
+- **Not verified:** the Unreal-specific files have **not** been built with UnrealBuildTool, because Unreal was not available.
+- **Missing features and guesses:** see the example README's "Fidelity" section.
+
+Generators keep the code in sync with the data:
+- `tools/node/weaponheader.js` writes `TFWeaponTable.h` from `data/`.
+- `tools/node/gen_settings_ue.js` writes `TFPilotSettingsUE.h` from `TFMovementCore.h`.
+
 ## Confidence tags
 Every value and claim in the docs carries one of these:
 

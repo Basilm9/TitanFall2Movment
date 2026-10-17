@@ -1,0 +1,18 @@
+{
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "0.1",
+	"FriendlyName": "Titanfall 2 Pilot Movement (reimplementation)",
+	"Description": "Clean-room reimplementation of Titanfall 2 pilot movement and weapon damage math, written from the docs in this repository. No game code.",
+	"Category": "Gameplay",
+	"CreatedBy": "TitanFall2Movment",
+	"CanContainContent": false,
+	"Installed": false,
+	"Modules": [
+		{
+			"Name": "TFMovement",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		}
+	]
+}

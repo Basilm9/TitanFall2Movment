@@ -201,6 +201,8 @@ for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.txt')).sort()) {
     spread_hip: r(num(x, 'spread_stand_hip')), spread_hip_max_kick: r(num(x, 'spread_max_kick_stand_hip')), spread_ads: r(num(x, 'spread_stand_ads')),
     projectile_speed: r(num(x, 'projectile_launch_speed')), charge_time: r(chargeTime),
     mods: Object.keys(w.mods).join(' '),
+    burst_count: burst > 1 ? burst : 1, burst_delay_s: r(burstDelay), pellets_n: perPellet,
+    shotgun_blast: name === 'mp_weapon_shotgun' ? 1 : 0, semi_auto: semi ? 1 : 0, ammo_per_shot: r(perShot),
   });
 }
 
